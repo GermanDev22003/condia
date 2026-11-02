@@ -5,20 +5,6 @@ Materias: Desarrollo de Aplicaciones Móviles, Utilización de Frameworks y Meto
 
 ConDIA centraliza la administración de un condominio (edificio o residencial): residentes, cuotas, pagos, quejas, solicitudes de mantenimiento, personal e ingresos registrados.
 
-## Componentes
-
-|---|---|---|
-| `api/` | API REST que aplica las reglas del negocio y habla con la base de datos | PHP · Laravel |
-| `web/` | Panel administrativo | Vue |
-| `mobile/` | App del residente | Angular · Ionic |
-| `docs/` | Documentación, modelo de datos, mockups y script SQL | — |
-
-```
-Vue (web) ─┐
-           ├─ HTTP + JSON ─→ Laravel (api) ─→ MySQL (XAMPP)
-Ionic app ─┘
-```
-
 ## Equipo
 
 | Integrante | Rol |
