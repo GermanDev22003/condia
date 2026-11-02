@@ -1,9 +1,8 @@
--- ConDIA · Script de base de datos (MySQL/MariaDB para XAMPP)
--- Sprint 1 · Esquema final en 3FN (según el DER y la normalización del documento)
+
 CREATE DATABASE IF NOT EXISTS condia CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE condia;
 
--- Condominio administrado (un único registro en la versión 1).
+-- Condominio administrado
 CREATE TABLE condominios (
   id_condominio INT NOT NULL AUTO_INCREMENT,
   nombre VARCHAR(100) NOT NULL,
@@ -26,7 +25,7 @@ CREATE TABLE unidades (
   CONSTRAINT fk_unidades_id_condominio FOREIGN KEY (id_condominio) REFERENCES condominios(id_condominio)
 ) ENGINE=InnoDB;
 
--- Cuentas de acceso al panel web y a la app móvil.
+-- tabla de usuarios.
 CREATE TABLE usuarios (
   id_usuario INT NOT NULL AUTO_INCREMENT,
   correo VARCHAR(150) NOT NULL,
@@ -38,7 +37,7 @@ CREATE TABLE usuarios (
   CONSTRAINT chk_usuarios_rol CHECK (rol IN ('administrador','residente'))
 ) ENGINE=InnoDB;
 
--- Personas que residen en el condominio. La cuenta de acceso es opcional.
+-- tabla de residentes del condominio.
 CREATE TABLE residentes (
   id_residente INT NOT NULL AUTO_INCREMENT,
   id_usuario INT,
@@ -70,7 +69,7 @@ CREATE TABLE cuotas (
   CONSTRAINT chk_cuotas_estado CHECK (estado IN ('pendiente','pagada','vencida'))
 ) ENGINE=InnoDB;
 
--- Pagos registrados por la administración (los ingresos se calculan desde esta tabla).
+-- Pagos registrados.
 CREATE TABLE pagos (
   id_pago INT NOT NULL AUTO_INCREMENT,
   id_cuota INT NOT NULL,
@@ -102,7 +101,7 @@ CREATE TABLE quejas (
   CONSTRAINT chk_quejas_estado CHECK (estado IN ('pendiente','en_proceso','resuelta'))
 ) ENGINE=InnoDB;
 
--- Personal de mantenimiento y seguridad. La cuenta de acceso es opcional.
+-- Personal de mantenimiento y seguridad.
 CREATE TABLE personal (
   id_personal INT NOT NULL AUTO_INCREMENT,
   id_condominio INT NOT NULL,
