@@ -12,6 +12,11 @@ export const routes: Routes = [
     canActivate: [autenticadoGuard],
     loadComponent: () => import('./inicio/inicio.page').then((m) => m.InicioPage),
   },
+  {
+    path: 'cuotas',
+    canActivate: [autenticadoGuard],
+    loadComponent: () => import('./cuotas/cuotas.page').then((m) => m.CuotasPage),
+  },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   { path: '**', redirectTo: 'inicio' },
 ];

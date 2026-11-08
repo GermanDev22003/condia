@@ -1,0 +1,56 @@
+<ion-content [fullscreen]="true" class="cuotas">
+  <header class="cabecera">
+    <button class="volver" type="button" (click)="volver()">‹ Inicio</button>
+    <h1>Mis cuotas</h1>
+    @if (datos(); as d) {
+      <p class="total">Pendiente por pagar: <strong>${{ d.pendiente_total }}</strong></p>
+    }
+  </header>
+
+  <section class="contenido">
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    @if (cargando()) {
+      <p class="vacio">Cargando…</p>
+    } @else if (datos() && datos()!.cuotas.length === 0) {
+      <p class="vacio">Aún no tienes cuotas registradas.</p>
+    }
+
+    @for (c of datos()?.cuotas ?? []; track c.id_cuota) {
+      <article class="tarjeta">
+        <button class="resumen" type="button" (click)="alternar(c)">
+          <div>
+            <strong>{{ c.concepto }} · {{ c.periodo }}</strong>
+            <span>Vence el {{ c.fecha_vencimiento }}</span>
+          </div>
+          <div class="derecha">
+            <strong>${{ c.monto }}</strong>
+            <span class="estado" [class]="c.estado">{{ textoEstado[c.estado] }}</span>
+          </div>
+        </button>
+
+        @if (abierta() === c.id_cuota) {
+          <div class="detalle">
+            @if (c.estado !== 'pagada') {
+              <p class="saldo">Saldo pendiente: <strong>${{ saldo(c).toFixed(2) }}</strong></p>
+            }
+            @if (c.pagos.length === 0) {
+              <p class="sinpagos">Esta cuota todavía no tiene pagos registrados.</p>
+            }
+            @for (p of c.pagos; track p.id_pago) {
+              <div class="pago">
+                <span>{{ p.fecha_pago }} · {{ p.metodo_pago }}</span>
+                <strong>${{ p.monto_pagado }}</strong>
+                @if (p.referencia) {
+                  <small>Ref. {{ p.referencia }}</small>
+                }
+              </div>
+            }
+          </div>
+        }
+      </article>
+    }
+  </section>
+</ion-content>

@@ -12,9 +12,14 @@
       <p class="error">{{ error() }}</p>
     }
 
-    <article class="tarjeta">
-      <p class="etiqueta">CUOTA PENDIENTE</p>
-      <p class="aviso">Próximamente</p>
+    <article class="tarjeta tocable" (click)="verCuotas()">
+      <p class="etiqueta">TOTAL PENDIENTE</p>
+      @if (pendiente() !== null) {
+        <p class="monto">${{ pendiente() }}</p>
+        <span>Toca para ver mis cuotas</span>
+      } @else {
+        <p class="aviso">Cargando…</p>
+      }
     </article>
 
     <article class="tarjeta fila">
@@ -31,10 +36,10 @@
       </div>
     </article>
 
-    <article class="tarjeta fila">
+    <article class="tarjeta fila tocable" (click)="verCuotas()">
       <div>
-        <strong>Historial de pagos</strong>
-        <span>Próximamente</span>
+        <strong>Mis cuotas y pagos</strong>
+        <span>Cuotas, saldo y historial de pagos</span>
       </div>
     </article>
   </section>

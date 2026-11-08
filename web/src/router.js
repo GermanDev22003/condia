@@ -18,11 +18,11 @@ const router = createRouter({
       children: [
         { path: 'dashboard', ...proximamente('Dashboard') },
         { path: 'residentes', component: () => import('./views/ResidentesView.vue'), meta: { titulo: 'Gestión de residentes' } },
-        { path: 'cuotas', ...proximamente('Cuotas y pagos') },
+        { path: 'cuotas', component: () => import('./views/CuotasView.vue'), meta: { titulo: 'Cuotas y pagos' } },
         { path: 'quejas', ...proximamente('Quejas') },
         { path: 'mantenimiento', ...proximamente('Mantenimiento') },
         { path: 'personal', ...proximamente('Personal') },
-        { path: 'ingresos', ...proximamente('Ingresos') },
+        { path: 'ingresos', component: () => import('./views/IngresosView.vue'), meta: { titulo: 'Consulta de ingresos' } },
       ],
     },
     { path: '/:cualquiera(.*)*', redirect: '/' },

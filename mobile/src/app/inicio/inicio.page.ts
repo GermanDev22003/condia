@@ -1,9 +1,9 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonContent } from '@ionic/angular';
-import { ApiError } from '../core/api.service';
+import { ApiError, ApiService } from '../core/api.service';
 import { AuthService } from '../core/auth.service';
-import type { Usuario } from '../core/modelos';
+import type { MisCuotas, Usuario } from '../core/modelos';
 import { SessionService } from '../core/session.service';
 
 @Component({
@@ -13,6 +13,7 @@ import { SessionService } from '../core/session.service';
   imports: [IonContent],
 })
 export class InicioPage implements OnInit {
+  private readonly api = inject(ApiService);
   private readonly auth = inject(AuthService);
   private readonly session = inject(SessionService);
   private readonly router = inject(Router);
@@ -20,6 +21,7 @@ export class InicioPage implements OnInit {
   // Se muestra primero lo guardado en la sesión y luego se actualiza con la API.
   readonly perfil = signal<Usuario | null>(this.session.usuario());
   readonly error = signal('');
+  readonly pendiente = signal<string | null>(null);
 
   readonly nombre = computed(() => this.perfil()?.residente?.nombres.split(' ')[0] ?? '');
   readonly lugar = computed(() => {
@@ -34,11 +36,17 @@ export class InicioPage implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.perfil.set(await this.auth.me());
+      const cuotas = await this.api.request<MisCuotas>('/mis-cuotas');
+      this.pendiente.set(cuotas.pendiente_total);
     } catch (e) {
       if (e instanceof ApiError && e.estado !== 401) {
         this.error.set(e.message);
       }
     }
+  }
+
+  async verCuotas(): Promise<void> {
+    await this.router.navigateByUrl('/cuotas');
   }
 
   async salir(): Promise<void> {

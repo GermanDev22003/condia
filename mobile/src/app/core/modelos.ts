@@ -31,3 +31,30 @@ export interface RespuestaLogin {
   tipo: string;
   usuario: Usuario;
 }
+
+export interface Pago {
+  id_pago: number;
+  id_cuota: number;
+  monto_pagado: string;
+  fecha_pago: string;
+  metodo_pago: 'efectivo' | 'transferencia' | 'cheque';
+  referencia: string | null;
+}
+
+export type EstadoCuota = 'pendiente' | 'pagada' | 'vencida';
+
+export interface Cuota {
+  id_cuota: number;
+  concepto: string;
+  monto: string;
+  periodo: string;
+  fecha_vencimiento: string;
+  estado: EstadoCuota;
+  total_pagado: string | null;
+  pagos: Pago[];
+}
+
+export interface MisCuotas {
+  pendiente_total: string;
+  cuotas: Cuota[];
+}
