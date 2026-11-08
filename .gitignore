@@ -35,3 +35,6 @@ npm-debug.log*
 mobile/.sass-cache/
 mobile/platforms/
 mobile/plugins/
+
+# Postman (configuracion local)
+.postman/
