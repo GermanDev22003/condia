@@ -62,6 +62,16 @@ Respuesta 201: el residente con su `unidad` y `usuario`.
 { "telefono": "7000-9999", "id_unidad": 3 }
 ```
 
+**Dar acceso a un residente que no tiene usuario** (`correo` y `password` juntos, contraseña mínimo 8):
+```json
+{ "correo": "roberto@condia.test", "password": "Residente123" }
+```
+
+**Restablecer la contraseña** de un residente que ya tiene usuario (cierra sus sesiones abiertas):
+```json
+{ "password": "NuevaClave123" }
+```
+
 ## Códigos de error comunes
 
 | Código | Significado |

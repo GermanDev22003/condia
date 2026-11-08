@@ -95,10 +95,16 @@ class ResidenteController extends Controller
                 'sometimes', 'email', 'max:150',
                 Rule::unique('usuarios', 'correo')->ignore($residente->id_usuario, 'id_usuario'),
             ],
+            // Si el residente ya tiene usuario: cambia su contraseña.
+            // Si no tiene: junto con "correo" crea su acceso.
+            'password' => ['sometimes', 'nullable', 'string', 'min:8'],
         ]);
 
-        if (isset($datos['correo']) && ! $residente->usuario) {
-            return response()->json(['mensaje' => 'Este residente no tiene usuario de acceso'], 422);
+        if (! $residente->usuario && isset($datos['correo']) && empty($datos['password'])) {
+            return response()->json([
+                'mensaje' => 'Datos inválidos',
+                'errors' => ['password' => ['La contraseña es obligatoria para crear el acceso']],
+            ], 422);
         }
 
         DB::transaction(function () use ($residente, $datos) {
@@ -114,9 +120,22 @@ class ResidenteController extends Controller
                 if (isset($datos['estado'])) {
                     $cambios['activo'] = $datos['estado'] === 'activo';
                 }
+                if (! empty($datos['password'])) {
+                    $cambios['password'] = $datos['password'];
+                    // al cambiar la contraseña se cierran las sesiones abiertas
+                    TokenAcceso::where('id_usuario', $residente->id_usuario)->delete();
+                }
                 if ($cambios) {
                     $residente->usuario->update($cambios);
                 }
+            } elseif (isset($datos['correo'])) {
+                $usuario = Usuario::create([
+                    'correo' => $datos['correo'],
+                    'password' => $datos['password'],
+                    'rol' => 'residente',
+                    'activo' => $residente->estado === 'activo',
+                ]);
+                $residente->update(['id_usuario' => $usuario->id_usuario]);
             }
         });
 

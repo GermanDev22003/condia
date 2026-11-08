@@ -121,7 +121,13 @@ async function guardar() {
   try {
     if (modal.id) {
       const body = { ...base, estado: form.estado }
-      if (modal.tieneUsuario) body.correo = form.correo.trim()
+      if (modal.tieneUsuario) {
+        body.correo = form.correo.trim()
+        if (form.password) body.password = form.password // restablecer contraseña
+      } else if (form.crearAcceso) {
+        body.correo = form.correo.trim()
+        body.password = form.password
+      }
       await api(`/residentes/${modal.id}`, { method: 'PUT', body })
     } else {
       const body = { ...base }
@@ -269,7 +275,7 @@ async function darDeBaja(r) {
         </div>
 
         <!-- Usuario de acceso -->
-        <template v-if="!modal.id">
+        <template v-if="!modal.id || !modal.tieneUsuario">
           <label class="casilla">
             <input v-model="form.crearAcceso" type="checkbox" /> Crear usuario de acceso a la app
           </label>
@@ -286,10 +292,17 @@ async function darDeBaja(r) {
             </div>
           </div>
         </template>
-        <div v-else-if="modal.tieneUsuario" class="campo">
-          <label>Correo de acceso</label>
-          <input v-model="form.correo" type="email" required />
-          <small v-if="errores.correo" class="error">{{ errores.correo[0] }}</small>
+        <div v-else class="fila">
+          <div class="campo">
+            <label>Correo de acceso</label>
+            <input v-model="form.correo" type="email" required />
+            <small v-if="errores.correo" class="error">{{ errores.correo[0] }}</small>
+          </div>
+          <div class="campo">
+            <label>Nueva contraseña (opcional)</label>
+            <input v-model="form.password" type="password" minlength="8" placeholder="Vacío = no cambiarla" />
+            <small v-if="errores.password" class="error">{{ errores.password[0] }}</small>
+          </div>
         </div>
 
         <p v-if="errorGeneral" class="alerta">{{ errorGeneral }}</p>
