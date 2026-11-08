@@ -54,7 +54,7 @@ class AuthController extends Controller
     private function datosUsuario(Usuario $usuario): array
     {
         $residente = $usuario->rol === 'residente'
-            ? Residente::with('unidad')->where('id_usuario', $usuario->id_usuario)->first()
+            ? Residente::with('unidad.condominio')->where('id_usuario', $usuario->id_usuario)->first()
             : null;
 
         return [

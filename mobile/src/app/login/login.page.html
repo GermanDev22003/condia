@@ -1,0 +1,38 @@
+<ion-content [fullscreen]="true" class="login">
+  <main class="caja">
+    <h1 class="logo">Con<span>DIA</span></h1>
+    <p class="lema">Tu condominio en tu bolsillo</p>
+
+    <ion-input
+      class="campo"
+      label="Correo"
+      labelPlacement="stacked"
+      type="email"
+      autocomplete="email"
+      placeholder="maria@condia.test"
+      [value]="correo()"
+      (ionInput)="correo.set($any($event).detail.value ?? '')"
+      (keyup.enter)="ingresar()"
+    ></ion-input>
+
+    <ion-input
+      class="campo"
+      label="Contraseña"
+      labelPlacement="stacked"
+      type="password"
+      autocomplete="current-password"
+      placeholder="••••••••"
+      [value]="password()"
+      (ionInput)="password.set($any($event).detail.value ?? '')"
+      (keyup.enter)="ingresar()"
+    ></ion-input>
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    <ion-button expand="block" [disabled]="enviando()" (click)="ingresar()">
+      {{ enviando() ? 'Ingresando…' : 'Ingresar' }}
+    </ion-button>
+  </main>
+</ion-content>

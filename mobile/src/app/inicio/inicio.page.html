@@ -1,0 +1,41 @@
+<ion-content [fullscreen]="true" class="inicio">
+  <header class="cabecera">
+    <div class="fila">
+      <span class="lugar">{{ lugar() }}</span>
+      <button class="salir" type="button" (click)="salir()">Salir</button>
+    </div>
+    <h1>Hola, {{ nombre() }} 👋</h1>
+  </header>
+
+  <section class="contenido">
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    <article class="tarjeta">
+      <p class="etiqueta">CUOTA PENDIENTE</p>
+      <p class="aviso">Próximamente</p>
+    </article>
+
+    <article class="tarjeta fila">
+      <div>
+        <strong>Mis quejas</strong>
+        <span>Próximamente</span>
+      </div>
+    </article>
+
+    <article class="tarjeta fila">
+      <div>
+        <strong>Mantenimiento</strong>
+        <span>Próximamente</span>
+      </div>
+    </article>
+
+    <article class="tarjeta fila">
+      <div>
+        <strong>Historial de pagos</strong>
+        <span>Próximamente</span>
+      </div>
+    </article>
+  </section>
+</ion-content>
