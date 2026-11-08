@@ -2,6 +2,8 @@
 
 Base: `http://127.0.0.1:8000/api` · Formato: JSON · Autenticación: `Authorization: Bearer <token>`
 
+Colección lista para importar en Postman: [`ConDIA.postman_collection.json`](ConDIA.postman_collection.json) (Import → arrastrar el archivo; ejecuta primero "Login administrador" y el token se guarda solo).
+
 En Postman, para peticiones con cuerpo: pestaña **Body → raw → JSON**, y añade el encabezado `Accept: application/json`.
 
 ## Usuarios de prueba (los crea `php artisan migrate --seed`)
