@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\AutenticarToken;
 use App\Http\Middleware\SoloAdministrador;
+use App\Http\Middleware\SoloResidente;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth.token' => AutenticarToken::class,
             'admin' => SoloAdministrador::class,
+            'residente' => SoloResidente::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

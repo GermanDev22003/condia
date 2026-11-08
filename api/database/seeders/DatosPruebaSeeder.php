@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Condominio;
+use App\Models\Cuota;
+use App\Models\Pago;
 use App\Models\Residente;
 use App\Models\Unidad;
 use App\Models\Usuario;
@@ -65,5 +67,25 @@ class DatosPruebaSeeder extends Seeder
                 'estado' => 'activo',
             ]);
         }
+
+        $this->cuotasDePrueba();
+    }
+
+    /** Cuotas de ejemplo: una pagada, una pendiente, una vencida y una con pago parcial. */
+    private function cuotasDePrueba(): void
+    {
+        $admin = Usuario::where('rol', 'administrador')->first();
+        $res = Residente::orderBy('id_residente')->get();
+        $maria = $res[0];
+        $carlos = $res[1];
+
+        $pagada = Cuota::create(['id_residente' => $maria->id_residente, 'concepto' => 'Mantenimiento', 'monto' => 45.00, 'periodo' => '2026-09', 'fecha_vencimiento' => '2026-09-10', 'estado' => 'pagada']);
+        Pago::create(['id_cuota' => $pagada->id_cuota, 'id_usuario_registro' => $admin->id_usuario, 'monto_pagado' => 45.00, 'fecha_pago' => '2026-09-08', 'metodo_pago' => 'transferencia', 'referencia' => 'TRF-0001']);
+
+        Cuota::create(['id_residente' => $maria->id_residente, 'concepto' => 'Mantenimiento', 'monto' => 45.00, 'periodo' => '2026-10', 'fecha_vencimiento' => '2026-10-10', 'estado' => 'pendiente']);
+        Cuota::create(['id_residente' => $maria->id_residente, 'concepto' => 'Mantenimiento', 'monto' => 45.00, 'periodo' => '2026-12', 'fecha_vencimiento' => '2026-12-10', 'estado' => 'pendiente']);
+
+        $parcial = Cuota::create(['id_residente' => $carlos->id_residente, 'concepto' => 'Mantenimiento', 'monto' => 45.00, 'periodo' => '2026-11', 'fecha_vencimiento' => '2026-11-30', 'estado' => 'pendiente']);
+        Pago::create(['id_cuota' => $parcial->id_cuota, 'id_usuario_registro' => $admin->id_usuario, 'monto_pagado' => 20.00, 'fecha_pago' => '2026-11-03', 'metodo_pago' => 'efectivo', 'referencia' => null]);
     }
 }

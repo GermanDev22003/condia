@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CuotaController;
+use App\Http\Controllers\IngresoController;
+use App\Http\Controllers\MisCuotasController;
 use App\Http\Controllers\ResidenteController;
 use App\Http\Controllers\UnidadController;
 use Illuminate\Support\Facades\Route;
@@ -17,5 +20,17 @@ Route::middleware('auth.token')->group(function () {
     Route::middleware('admin')->group(function () {
         Route::get('/unidades', [UnidadController::class, 'index']);
         Route::apiResource('residentes', ResidenteController::class);
+
+        Route::get('/cuotas', [CuotaController::class, 'index']);
+        Route::post('/cuotas', [CuotaController::class, 'store']);
+        Route::get('/cuotas/{cuota}', [CuotaController::class, 'show']);
+        Route::post('/cuotas/{cuota}/pagos', [CuotaController::class, 'registrarPago']);
+        Route::get('/ingresos', [IngresoController::class, 'index']);
+    });
+
+    // Solo residente
+    Route::middleware('residente')->group(function () {
+        Route::get('/mis-cuotas', [MisCuotasController::class, 'index']);
+        Route::get('/mis-cuotas/{id}', [MisCuotasController::class, 'show']);
     });
 });
