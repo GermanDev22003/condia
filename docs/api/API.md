@@ -38,6 +38,10 @@ En Postman, para peticiones con cuerpo: pestaña **Body → raw → JSON**, y a�
 | GET | `/solicitudes-mantenimiento` | administrador | Lista paginada. Filtro: `?estado=pendiente` |
 | PUT | `/solicitudes-mantenimiento/{id}` | administrador | Cambia el estado y asigna personal |
 | GET | `/personal` | administrador | Personal. Filtros: `?cargo=mantenimiento&estado=activo` |
+| GET | `/personal/{id}` | administrador | Un empleado |
+| POST | `/personal` | administrador | Registra un empleado |
+| PUT | `/personal/{id}` | administrador | Edita un empleado |
+| DELETE | `/personal/{id}` | administrador | Baja lógica (estado `inactivo`) |
 | GET | `/mis-quejas` | residente | Sus quejas con estado y respuesta |
 | POST | `/mis-quejas` | residente | Envía una queja |
 | GET | `/mis-solicitudes` | residente | Sus solicitudes con estado y personal asignado |
@@ -131,6 +135,16 @@ Prioridades: `baja`, `media`, `alta`. Nace con estado `pendiente`.
 { "estado": "en_proceso", "id_personal": 1 }
 ```
 Estados: `pendiente`, `en_proceso`, `completada`. Solo se puede asignar personal de mantenimiento activo, hace falta personal asignado para pasar a `en_proceso` o `completada`, y una solicitud completada ya no se puede modificar.
+
+## Personal
+
+**Registrar un empleado** (`POST /personal`):
+```json
+{ "nombres": "Jorge", "apellidos": "Menjívar", "cargo": "mantenimiento", "turno": "diurno", "telefono": "7100-1234" }
+```
+Cargos: `mantenimiento`, `seguridad`. Turnos: `diurno`, `nocturno`, `mixto`. Estados: `activo` (por defecto) e `inactivo`.
+
+No se puede dar de baja (ni poner `inactivo`) a un empleado que tenga solicitudes de mantenimiento `en_proceso`: la API responde 422 y hay que completar o reasignar esas solicitudes primero.
 
 ## Códigos de error comunes
 

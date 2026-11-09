@@ -21,7 +21,7 @@ const router = createRouter({
         { path: 'cuotas', component: () => import('./views/CuotasView.vue'), meta: { titulo: 'Cuotas y pagos' } },
         { path: 'quejas', component: () => import('./views/QuejasView.vue'), meta: { titulo: 'Atención de quejas' } },
         { path: 'mantenimiento', component: () => import('./views/MantenimientoView.vue'), meta: { titulo: 'Solicitudes de mantenimiento' } },
-        { path: 'personal', ...proximamente('Personal') },
+        { path: 'personal', component: () => import('./views/PersonalView.vue'), meta: { titulo: 'Gestión de personal' } },
         { path: 'ingresos', component: () => import('./views/IngresosView.vue'), meta: { titulo: 'Consulta de ingresos' } },
       ],
     },

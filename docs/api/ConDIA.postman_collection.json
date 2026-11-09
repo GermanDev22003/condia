@@ -825,6 +825,114 @@
           }
         }
       ]
+    },
+    {
+      "name": "Personal (administrador)",
+      "item": [
+        {
+          "name": "Ver empleado",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/personal/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Registrar empleado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/personal",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombres\": \"Jorge\",\n  \"apellidos\": \"Menjívar\",\n  \"cargo\": \"mantenimiento\",\n  \"turno\": \"diurno\",\n  \"telefono\": \"7100-1234\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Editar empleado",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/personal/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombres\": \"Luis\",\n  \"apellidos\": \"Ortiz\",\n  \"cargo\": \"mantenimiento\",\n  \"turno\": \"mixto\",\n  \"telefono\": \"7100-0000\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Dar de baja empleado",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/personal/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal",
+                "3"
+              ]
+            }
+          }
+        }
+      ]
     }
   ]
 }

@@ -35,7 +35,7 @@ Route::middleware('auth.token')->group(function () {
         Route::put('/quejas/{queja}', [QuejaController::class, 'update']);
         Route::get('/solicitudes-mantenimiento', [SolicitudMantenimientoController::class, 'index']);
         Route::put('/solicitudes-mantenimiento/{solicitud}', [SolicitudMantenimientoController::class, 'update']);
-        Route::get('/personal', [PersonalController::class, 'index']);
+        Route::apiResource('personal', PersonalController::class)->parameters(['personal' => 'personal']);
     });
 
     // Solo residente
