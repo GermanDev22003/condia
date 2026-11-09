@@ -27,6 +27,11 @@ export const routes: Routes = [
     canActivate: [autenticadoGuard],
     loadComponent: () => import('./mantenimiento/mantenimiento.page').then((m) => m.MantenimientoPage),
   },
+  {
+    path: 'cambiar-password',
+    canActivate: [autenticadoGuard],
+    loadComponent: () => import('./cambiar-password/cambiar-password.page').then((m) => m.CambiarPasswordPage),
+  },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   { path: '**', redirectTo: 'inicio' },
 ];

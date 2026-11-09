@@ -116,6 +116,17 @@ label {
   color: #64748b;
 }
 
+label.casilla {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+label.casilla input {
+  padding: 0;
+  width: auto;
+}
+
 input,
 select,
 textarea {

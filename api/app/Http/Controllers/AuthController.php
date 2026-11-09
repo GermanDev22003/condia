@@ -46,6 +46,34 @@ class AuthController extends Controller
         return response()->json(['mensaje' => 'Sesión cerrada']);
     }
 
+    /** Cambia la contraseña del usuario autenticado y cierra sus demás sesiones. */
+    public function cambiarPassword(Request $request): JsonResponse
+    {
+        $datos = $request->validate([
+            'password_actual' => ['required', 'string'],
+            'password' => ['required', 'string', 'min:8', 'confirmed', 'different:password_actual'],
+        ]);
+
+        $usuario = $request->user();
+
+        if (! Hash::check($datos['password_actual'], $usuario->password)) {
+            return response()->json([
+                'mensaje' => 'Los datos no son válidos',
+                'errors' => ['password_actual' => ['La contraseña actual no es correcta']],
+            ], 422);
+        }
+
+        $usuario->update(['password' => $datos['password']]);
+
+        // se conserva solo la sesión desde la que se hizo el cambio
+        $actual = $request->attributes->get('token_acceso');
+        TokenAcceso::where('id_usuario', $usuario->id_usuario)
+            ->where('id_token', '!=', $actual?->id_token)
+            ->delete();
+
+        return response()->json(['mensaje' => 'Contraseña actualizada']);
+    }
+
     public function me(Request $request): JsonResponse
     {
         return response()->json($this->datosUsuario($request->user()));

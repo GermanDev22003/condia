@@ -4,7 +4,9 @@
 return [
     'after_or_equal' => 'El campo :attribute debe ser una fecha igual o posterior a :date.',
     'before_or_equal' => 'El campo :attribute debe ser una fecha igual o anterior a :date.',
+    'confirmed' => 'La confirmación de :attribute no coincide.',
     'date' => 'El campo :attribute no es una fecha válida.',
+    'different' => 'El campo :attribute debe ser diferente de :other.',
     'email' => 'El campo :attribute debe ser un correo válido.',
     'exists' => 'El valor seleccionado para :attribute no es válido.',
     'gt' => [
@@ -35,6 +37,7 @@ return [
     'attributes' => [
         'correo' => 'correo',
         'password' => 'contraseña',
+        'password_actual' => 'contraseña actual',
         'nombres' => 'nombres',
         'apellidos' => 'apellidos',
         'telefono' => 'teléfono',

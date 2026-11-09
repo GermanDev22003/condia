@@ -20,6 +20,7 @@ Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:10
 Route::middleware('auth.token')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
+    Route::post('/cambiar-password', [AuthController::class, 'cambiarPassword'])->middleware('throttle:10,1');
 
     // Solo administrador
     Route::middleware('admin')->group(function () {

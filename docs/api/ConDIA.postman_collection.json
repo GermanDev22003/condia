@@ -959,6 +959,40 @@
           }
         }
       ]
+    },
+    {
+      "name": "Cambio de contraseña (residente)",
+      "item": [
+        {
+          "name": "Cambiar contraseña",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cambiar-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cambiar-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password_actual\": \"Residente123\",\n  \"password\": \"NuevaClave456\",\n  \"password_confirmation\": \"NuevaClave456\"\n}"
+            }
+          }
+        }
+      ]
     }
   ]
 }

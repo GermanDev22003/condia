@@ -150,6 +150,14 @@ No se puede dar de baja (ni poner `inactivo`) a un empleado que tenga solicitude
 
 `GET /dashboard` (administrador). Resumen para la pantalla de inicio: `residentes_activos`, `ingresos_mes` (pagos con fecha del mes actual), `por_cobrar` (saldo de cuotas pendientes y vencidas), `cuotas_vencidas`, `quejas_abiertas`, `mantenimiento_abierto`, y las listas `quejas_recientes` y `solicitudes_recientes` (últimas 5 abiertas).
 
+## Cambio de contraseña
+
+`POST /cambiar-password` (cualquier usuario autenticado; máximo 10 intentos por minuto).
+```json
+{ "password_actual": "Residente123", "password": "NuevaClave456", "password_confirmation": "NuevaClave456" }
+```
+Reglas: mínimo 8 caracteres, confirmación igual y diferente de la actual. Si la contraseña actual es incorrecta responde 422 (`errors.password_actual`). Al cambiarla se cierran todas las demás sesiones del usuario; la sesión actual sigue activa.
+
 ## Códigos de error comunes
 
 | Código | Significado |
