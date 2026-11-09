@@ -18,6 +18,7 @@ export class LoginPage {
   readonly password = signal('');
   readonly error = signal('');
   readonly enviando = signal(false);
+  readonly ayudaAbierta = signal(false);
 
   async ingresar(): Promise<void> {
     if (this.enviando()) {
