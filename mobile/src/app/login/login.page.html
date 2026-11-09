@@ -25,7 +25,9 @@
       [value]="password()"
       (ionInput)="password.set($any($event).detail.value ?? '')"
       (keyup.enter)="ingresar()"
-    ></ion-input>
+    >
+      <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+    </ion-input>
 
     @if (error()) {
       <p class="error">{{ error() }}</p>

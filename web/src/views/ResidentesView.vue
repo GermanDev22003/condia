@@ -1,6 +1,7 @@
 <script setup>
 import { ref, reactive, watch, onMounted } from 'vue'
 import { api, ApiError } from '../api'
+import CampoPassword from '../components/CampoPassword.vue'
 
 // ---------- lista ----------
 const items = ref([])
@@ -287,7 +288,7 @@ async function darDeBaja(r) {
             </div>
             <div class="campo">
               <label>Contraseña (mínimo 8)</label>
-              <input v-model="form.password" type="password" minlength="8" required />
+              <CampoPassword v-model="form.password" minlength="8" required />
               <small v-if="errores.password" class="error">{{ errores.password[0] }}</small>
             </div>
           </div>
@@ -300,7 +301,7 @@ async function darDeBaja(r) {
           </div>
           <div class="campo">
             <label>Nueva contraseña (opcional)</label>
-            <input v-model="form.password" type="password" minlength="8" placeholder="Vacío = no cambiarla" />
+            <CampoPassword v-model="form.password" minlength="8" placeholder="Vacío = no cambiarla" />
             <small v-if="errores.password" class="error">{{ errores.password[0] }}</small>
           </div>
         </div>

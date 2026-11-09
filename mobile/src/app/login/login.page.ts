@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonButton, IonContent, IonInput } from '@ionic/angular';
+import { IonButton, IonContent, IonInput, IonInputPasswordToggle } from '@ionic/angular';
 import { ApiError } from '../core/api.service';
 import { AuthService } from '../core/auth.service';
 
@@ -8,7 +8,7 @@ import { AuthService } from '../core/auth.service';
   selector: 'app-login',
   templateUrl: 'login.page.html',
   styleUrls: ['login.page.scss'],
-  imports: [IonContent, IonInput, IonButton],
+  imports: [IonContent, IonInput, IonInputPasswordToggle, IonButton],
 })
 export class LoginPage {
   private readonly auth = inject(AuthService);

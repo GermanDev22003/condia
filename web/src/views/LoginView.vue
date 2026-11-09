@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { login } from '../auth'
+import CampoPassword from '../components/CampoPassword.vue'
 
 const router = useRouter()
 const correo = ref('')
@@ -37,7 +38,7 @@ async function ingresar() {
       </div>
       <div class="campo">
         <label for="password">Contraseña</label>
-        <input id="password" v-model="password" type="password" placeholder="••••••••" required />
+        <CampoPassword id="password" v-model="password" placeholder="••••••••" autocomplete="current-password" required />
       </div>
 
       <p v-if="error" class="alerta">{{ error }}</p>
