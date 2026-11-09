@@ -58,3 +58,26 @@ export interface MisCuotas {
   pendiente_total: string;
   cuotas: Cuota[];
 }
+
+export type EstadoReporte = 'pendiente' | 'en_proceso' | 'resuelta' | 'completada';
+
+export interface Queja {
+  id_queja: number;
+  asunto: string;
+  categoria: string;
+  descripcion: string;
+  estado: EstadoReporte;
+  respuesta: string | null;
+  fecha_registro: string;
+}
+
+export interface SolicitudMantenimiento {
+  id_solicitud: number;
+  titulo: string;
+  ubicacion: string;
+  prioridad: 'baja' | 'media' | 'alta';
+  descripcion: string;
+  estado: EstadoReporte;
+  fecha_registro: string;
+  personal: { id_personal: number; nombres: string; apellidos: string } | null;
+}

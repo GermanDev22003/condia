@@ -582,6 +582,249 @@
           }
         }
       ]
+    },
+    {
+      "name": "Quejas y mantenimiento (administrador)",
+      "item": [
+        {
+          "name": "Listar quejas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/quejas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "quejas"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Atender queja",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/quejas/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "quejas",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"resuelta\",\n  \"respuesta\": \"Se habló con los vecinos del segundo nivel.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Listar solicitudes de mantenimiento",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/solicitudes-mantenimiento",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "solicitudes-mantenimiento"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Asignar y avanzar solicitud",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/solicitudes-mantenimiento/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "solicitudes-mantenimiento",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"en_proceso\",\n  \"id_personal\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Listar personal de mantenimiento",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/personal?cargo=mantenimiento&estado=activo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal"
+              ],
+              "query": [
+                {
+                  "key": "cargo",
+                  "value": "mantenimiento"
+                },
+                {
+                  "key": "estado",
+                  "value": "activo"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Quejas y mantenimiento (residente)",
+      "item": [
+        {
+          "name": "Mis quejas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mis-quejas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mis-quejas"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Enviar queja",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mis-quejas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mis-quejas"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"asunto\": \"Basura en el pasillo\",\n  \"categoria\": \"limpieza\",\n  \"descripcion\": \"Dejan bolsas de basura junto a la escalera.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Mis solicitudes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mis-solicitudes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mis-solicitudes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Enviar solicitud de mantenimiento",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mis-solicitudes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mis-solicitudes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Puerta que no cierra\",\n  \"ubicacion\": \"Entrada principal\",\n  \"prioridad\": \"media\",\n  \"descripcion\": \"La puerta roza con el marco y no cierra bien.\"\n}"
+            }
+          }
+        }
+      ]
     }
   ]
 }

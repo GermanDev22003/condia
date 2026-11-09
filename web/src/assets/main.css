@@ -23,7 +23,7 @@ body {
   font-size: 15px;
 }
 
-button, input, select { font: inherit; }
+button, input, select, textarea { font: inherit; }
 
 .logo { font-weight: 800; font-size: 22px; letter-spacing: -0.3px; }
 .logo span { color: var(--teal); }
@@ -42,13 +42,13 @@ button, input, select { font: inherit; }
 
 .campo { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
 .campo label { font-size: 13px; color: var(--gris); }
-.campo input, .campo select {
+.campo input, .campo select, .campo textarea {
   border: 1px solid var(--borde);
   border-radius: 8px;
   padding: 10px 12px;
   background: #fff;
 }
-.campo input:focus, .campo select:focus { outline: 2px solid var(--teal-claro); border-color: transparent; }
+.campo input:focus, .campo select:focus, .campo textarea:focus { outline: 2px solid var(--teal-claro); border-color: transparent; }
 .campo .error { color: var(--rojo); font-size: 12px; }
 
 .alerta {

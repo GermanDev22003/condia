@@ -17,6 +17,16 @@ export const routes: Routes = [
     canActivate: [autenticadoGuard],
     loadComponent: () => import('./cuotas/cuotas.page').then((m) => m.CuotasPage),
   },
+  {
+    path: 'quejas',
+    canActivate: [autenticadoGuard],
+    loadComponent: () => import('./quejas/quejas.page').then((m) => m.QuejasPage),
+  },
+  {
+    path: 'mantenimiento',
+    canActivate: [autenticadoGuard],
+    loadComponent: () => import('./mantenimiento/mantenimiento.page').then((m) => m.MantenimientoPage),
+  },
   { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   { path: '**', redirectTo: 'inicio' },
 ];

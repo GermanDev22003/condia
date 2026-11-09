@@ -4,6 +4,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CuotaController;
 use App\Http\Controllers\IngresoController;
 use App\Http\Controllers\MisCuotasController;
+use App\Http\Controllers\MisReportesController;
+use App\Http\Controllers\PersonalController;
+use App\Http\Controllers\QuejaController;
+use App\Http\Controllers\SolicitudMantenimientoController;
 use App\Http\Controllers\ResidenteController;
 use App\Http\Controllers\UnidadController;
 use Illuminate\Support\Facades\Route;
@@ -26,11 +30,21 @@ Route::middleware('auth.token')->group(function () {
         Route::get('/cuotas/{cuota}', [CuotaController::class, 'show']);
         Route::post('/cuotas/{cuota}/pagos', [CuotaController::class, 'registrarPago']);
         Route::get('/ingresos', [IngresoController::class, 'index']);
+
+        Route::get('/quejas', [QuejaController::class, 'index']);
+        Route::put('/quejas/{queja}', [QuejaController::class, 'update']);
+        Route::get('/solicitudes-mantenimiento', [SolicitudMantenimientoController::class, 'index']);
+        Route::put('/solicitudes-mantenimiento/{solicitud}', [SolicitudMantenimientoController::class, 'update']);
+        Route::get('/personal', [PersonalController::class, 'index']);
     });
 
     // Solo residente
     Route::middleware('residente')->group(function () {
         Route::get('/mis-cuotas', [MisCuotasController::class, 'index']);
         Route::get('/mis-cuotas/{id}', [MisCuotasController::class, 'show']);
+        Route::get('/mis-quejas', [MisReportesController::class, 'quejas']);
+        Route::post('/mis-quejas', [MisReportesController::class, 'crearQueja']);
+        Route::get('/mis-solicitudes', [MisReportesController::class, 'solicitudes']);
+        Route::post('/mis-solicitudes', [MisReportesController::class, 'crearSolicitud']);
     });
 });

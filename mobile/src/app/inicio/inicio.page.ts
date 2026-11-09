@@ -45,6 +45,10 @@ export class InicioPage implements OnInit {
     }
   }
 
+  async ir(ruta: string): Promise<void> {
+    await this.router.navigateByUrl(ruta);
+  }
+
   async verCuotas(): Promise<void> {
     await this.router.navigateByUrl('/cuotas');
   }

@@ -33,6 +33,15 @@ En Postman, para peticiones con cuerpo: pestaña **Body → raw → JSON**, y a�
 | GET | `/ingresos?desde=AAAA-MM-DD&hasta=AAAA-MM-DD` | administrador | Total, cantidad y detalle de pagos del rango |
 | GET | `/mis-cuotas` | residente | Sus cuotas, sus pagos y el total pendiente |
 | GET | `/mis-cuotas/{id}` | residente | Una de sus cuotas con sus pagos |
+| GET | `/quejas` | administrador | Lista paginada de quejas. Filtro: `?estado=pendiente` |
+| PUT | `/quejas/{id}` | administrador | Cambia el estado y escribe la respuesta |
+| GET | `/solicitudes-mantenimiento` | administrador | Lista paginada. Filtro: `?estado=pendiente` |
+| PUT | `/solicitudes-mantenimiento/{id}` | administrador | Cambia el estado y asigna personal |
+| GET | `/personal` | administrador | Personal. Filtros: `?cargo=mantenimiento&estado=activo` |
+| GET | `/mis-quejas` | residente | Sus quejas con estado y respuesta |
+| POST | `/mis-quejas` | residente | Envía una queja |
+| GET | `/mis-solicitudes` | residente | Sus solicitudes con estado y personal asignado |
+| POST | `/mis-solicitudes` | residente | Envía una solicitud de mantenimiento |
 
 ## Ejemplos
 
@@ -96,6 +105,32 @@ Reglas: `metodo_pago` es `efectivo`, `transferencia` o `cheque`; la fecha no pue
 **Estados de una cuota:** `pendiente`, `pagada` y `vencida`. Una cuota pendiente cuya fecha de vencimiento ya pasó se marca `vencida` al consultar las cuotas.
 
 **Ingresos** (`GET /ingresos`): requiere `desde` y `hasta`; devuelve `total`, `cantidad_pagos` y `pagos`.
+
+## Quejas y mantenimiento
+
+**Enviar una queja** (residente, `POST /mis-quejas`):
+```json
+{ "asunto": "Ruido en el pasillo", "categoria": "ruido", "descripcion": "Hay ruido después de las 10 de la noche." }
+```
+Categorías: `convivencia`, `limpieza`, `seguridad`, `ruido`, `infraestructura`, `otra`. Nace con estado `pendiente`.
+
+**Atender una queja** (administrador, `PUT /quejas/{id}`):
+```json
+{ "estado": "resuelta", "respuesta": "Se habló con los vecinos del segundo nivel." }
+```
+Estados: `pendiente`, `en_proceso`, `resuelta`. Para marcarla `resuelta` hace falta una respuesta, y una queja resuelta ya no se puede modificar.
+
+**Enviar una solicitud de mantenimiento** (residente, `POST /mis-solicitudes`):
+```json
+{ "titulo": "Fuga en el lavamanos", "ubicacion": "Baño principal", "prioridad": "alta", "descripcion": "Gotea por debajo." }
+```
+Prioridades: `baja`, `media`, `alta`. Nace con estado `pendiente`.
+
+**Atender una solicitud** (administrador, `PUT /solicitudes-mantenimiento/{id}`):
+```json
+{ "estado": "en_proceso", "id_personal": 1 }
+```
+Estados: `pendiente`, `en_proceso`, `completada`. Solo se puede asignar personal de mantenimiento activo, hace falta personal asignado para pasar a `en_proceso` o `completada`, y una solicitud completada ya no se puede modificar.
 
 ## Códigos de error comunes
 
