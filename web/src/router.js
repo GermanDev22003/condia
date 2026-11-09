@@ -14,9 +14,9 @@ const router = createRouter({
       path: '/',
       component: () => import('./layouts/PanelLayout.vue'),
       meta: { requiereSesion: true },
-      redirect: '/residentes',
+      redirect: '/dashboard',
       children: [
-        { path: 'dashboard', ...proximamente('Dashboard') },
+        { path: 'dashboard', component: () => import('./views/DashboardView.vue'), meta: { titulo: 'Dashboard' } },
         { path: 'residentes', component: () => import('./views/ResidentesView.vue'), meta: { titulo: 'Gestión de residentes' } },
         { path: 'cuotas', component: () => import('./views/CuotasView.vue'), meta: { titulo: 'Cuotas y pagos' } },
         { path: 'quejas', component: () => import('./views/QuejasView.vue'), meta: { titulo: 'Atención de quejas' } },
@@ -31,7 +31,7 @@ const router = createRouter({
 
 router.beforeEach((to) => {
   if (to.matched.some((r) => r.meta.requiereSesion) && !session.token) return '/login'
-  if (to.meta.invitado && session.token) return '/residentes'
+  if (to.meta.invitado && session.token) return '/dashboard'
 })
 
 export default router

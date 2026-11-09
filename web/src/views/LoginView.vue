@@ -15,7 +15,7 @@ async function ingresar() {
   enviando.value = true
   try {
     await login(correo.value.trim(), password.value)
-    router.push('/residentes')
+    router.push('/dashboard')
   } catch (e) {
     const detalle = e.errors && Object.values(e.errors)[0]?.[0]
     error.value = detalle || e.message

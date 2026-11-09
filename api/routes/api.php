@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CuotaController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IngresoController;
 use App\Http\Controllers\MisCuotasController;
 use App\Http\Controllers\MisReportesController;
@@ -30,6 +31,7 @@ Route::middleware('auth.token')->group(function () {
         Route::get('/cuotas/{cuota}', [CuotaController::class, 'show']);
         Route::post('/cuotas/{cuota}/pagos', [CuotaController::class, 'registrarPago']);
         Route::get('/ingresos', [IngresoController::class, 'index']);
+        Route::get('/dashboard', [DashboardController::class, 'index']);
 
         Route::get('/quejas', [QuejaController::class, 'index']);
         Route::put('/quejas/{queja}', [QuejaController::class, 'update']);

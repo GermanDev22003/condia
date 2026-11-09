@@ -146,6 +146,10 @@ Cargos: `mantenimiento`, `seguridad`. Turnos: `diurno`, `nocturno`, `mixto`. Est
 
 No se puede dar de baja (ni poner `inactivo`) a un empleado que tenga solicitudes de mantenimiento `en_proceso`: la API responde 422 y hay que completar o reasignar esas solicitudes primero.
 
+## Dashboard
+
+`GET /dashboard` (administrador). Resumen para la pantalla de inicio: `residentes_activos`, `ingresos_mes` (pagos con fecha del mes actual), `por_cobrar` (saldo de cuotas pendientes y vencidas), `cuotas_vencidas`, `quejas_abiertas`, `mantenimiento_abierto`, y las listas `quejas_recientes` y `solicitudes_recientes` (últimas 5 abiertas).
+
 ## Códigos de error comunes
 
 | Código | Significado |
