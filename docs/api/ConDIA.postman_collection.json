@@ -1,0 +1,998 @@
+{
+  "info": {
+    "name": "ConDIA API",
+    "description": "Primero ejecuta 'Login administrador': guarda el token solo. Base: http://127.0.0.1:8000/api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8000/api"
+    },
+    {
+      "key": "token",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Autenticación",
+      "item": [
+        {
+          "name": "Login administrador",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"admin@condia.test\",\n  \"password\": \"Admin12345\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Guarda el token para que las demás peticiones lo usen solas",
+                  "if (pm.response.code === 200) {",
+                  "  pm.collectionVariables.set('token', pm.response.json().token);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login residente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "login"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"correo\": \"maria@condia.test\",\n  \"password\": \"Residente123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "auth": {
+              "type": "noauth"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Guarda el token para que las demás peticiones lo usen solas",
+                  "if (pm.response.code === 200) {",
+                  "  pm.collectionVariables.set('token', pm.response.json().token);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Quién soy (me)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/me",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "me"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Cerrar sesión (logout)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "logout"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Residentes",
+      "item": [
+        {
+          "name": "Listar unidades",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/unidades",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "unidades"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar residentes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/residentes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "residentes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar residentes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/residentes?buscar=maria&estado=activo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "residentes"
+              ],
+              "query": [
+                {
+                  "key": "buscar",
+                  "value": "maria"
+                },
+                {
+                  "key": "estado",
+                  "value": "activo"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Ver residente",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/residentes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "residentes",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear residente",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/residentes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "residentes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_unidad\": 5,\n  \"nombres\": \"Laura\",\n  \"apellidos\": \"Gómez Rivas\",\n  \"telefono\": \"7000-5555\",\n  \"fecha_ingreso\": \"2026-11-10\",\n  \"correo\": \"laura@condia.test\",\n  \"password\": \"Residente123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Editar residente",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/residentes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "residentes",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"telefono\": \"7000-9999\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Dar de baja residente",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/residentes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "residentes",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cuotas y pagos (administrador)",
+      "item": [
+        {
+          "name": "Listar cuotas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cuotas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cuotas"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filtrar cuotas pendientes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cuotas?estado=pendiente&periodo=2026-11",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cuotas"
+              ],
+              "query": [
+                {
+                  "key": "estado",
+                  "value": "pendiente"
+                },
+                {
+                  "key": "periodo",
+                  "value": "2026-11"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Ver cuota",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cuotas/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cuotas",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Crear cuota",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cuotas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cuotas"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_residente\": 1,\n  \"concepto\": \"Cuota extraordinaria\",\n  \"monto\": 30.00,\n  \"periodo\": \"2026-11\",\n  \"fecha_vencimiento\": \"2026-11-30\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Registrar pago",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cuotas/2/pagos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cuotas",
+                "2",
+                "pagos"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"monto_pagado\": 25.00,\n  \"fecha_pago\": \"2026-11-08\",\n  \"metodo_pago\": \"efectivo\",\n  \"referencia\": null\n}"
+            }
+          }
+        },
+        {
+          "name": "Consultar ingresos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/ingresos?desde=2026-09-01&hasta=2026-11-30",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "ingresos"
+              ],
+              "query": [
+                {
+                  "key": "desde",
+                  "value": "2026-09-01"
+                },
+                {
+                  "key": "hasta",
+                  "value": "2026-11-30"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Mis cuotas (residente)",
+      "item": [
+        {
+          "name": "Mis cuotas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mis-cuotas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mis-cuotas"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Detalle de una cuota",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mis-cuotas/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mis-cuotas",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Quejas y mantenimiento (administrador)",
+      "item": [
+        {
+          "name": "Listar quejas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/quejas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "quejas"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Atender queja",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/quejas/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "quejas",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"resuelta\",\n  \"respuesta\": \"Se habló con los vecinos del segundo nivel.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Listar solicitudes de mantenimiento",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/solicitudes-mantenimiento",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "solicitudes-mantenimiento"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Asignar y avanzar solicitud",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/solicitudes-mantenimiento/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "solicitudes-mantenimiento",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"en_proceso\",\n  \"id_personal\": 1\n}"
+            }
+          }
+        },
+        {
+          "name": "Listar personal de mantenimiento",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/personal?cargo=mantenimiento&estado=activo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal"
+              ],
+              "query": [
+                {
+                  "key": "cargo",
+                  "value": "mantenimiento"
+                },
+                {
+                  "key": "estado",
+                  "value": "activo"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Quejas y mantenimiento (residente)",
+      "item": [
+        {
+          "name": "Mis quejas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mis-quejas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mis-quejas"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Enviar queja",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mis-quejas",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mis-quejas"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"asunto\": \"Basura en el pasillo\",\n  \"categoria\": \"limpieza\",\n  \"descripcion\": \"Dejan bolsas de basura junto a la escalera.\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Mis solicitudes",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mis-solicitudes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mis-solicitudes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Enviar solicitud de mantenimiento",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/mis-solicitudes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "mis-solicitudes"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titulo\": \"Puerta que no cierra\",\n  \"ubicacion\": \"Entrada principal\",\n  \"prioridad\": \"media\",\n  \"descripcion\": \"La puerta roza con el marco y no cierra bien.\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Personal (administrador)",
+      "item": [
+        {
+          "name": "Ver empleado",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/personal/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Registrar empleado",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/personal",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombres\": \"Jorge\",\n  \"apellidos\": \"Menjívar\",\n  \"cargo\": \"mantenimiento\",\n  \"turno\": \"diurno\",\n  \"telefono\": \"7100-1234\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Editar empleado",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/personal/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal",
+                "1"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nombres\": \"Luis\",\n  \"apellidos\": \"Ortiz\",\n  \"cargo\": \"mantenimiento\",\n  \"turno\": \"mixto\",\n  \"telefono\": \"7100-0000\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Dar de baja empleado",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/personal/3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "personal",
+                "3"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard (administrador)",
+      "item": [
+        {
+          "name": "Resumen del dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/dashboard",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "dashboard"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cambio de contraseña (residente)",
+      "item": [
+        {
+          "name": "Cambiar contraseña",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/cambiar-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cambiar-password"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"password_actual\": \"Residente123\",\n  \"password\": \"NuevaClave456\",\n  \"password_confirmation\": \"NuevaClave456\"\n}"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

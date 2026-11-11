@@ -1,0 +1,100 @@
+ion-content.inicio {
+  --background: #f8fafc;
+}
+
+.cabecera {
+  background: #0f766e;
+  color: #fff;
+  padding: calc(env(safe-area-inset-top) + 20px) 20px 22px;
+
+  h1 {
+    margin: 8px 0 0;
+    font-size: 24px;
+    font-weight: 700;
+  }
+}
+
+.cabecera .fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lugar {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.salir {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.contenido {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tarjeta {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 16px 18px;
+  color: #0f172a;
+
+  strong {
+    display: block;
+    font-size: 16px;
+  }
+
+  span {
+    display: block;
+    margin-top: 2px;
+    font-size: 13px;
+    color: #64748b;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.etiqueta {
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  color: #64748b;
+}
+
+.aviso {
+  margin-top: 8px !important;
+  font-size: 18px;
+  font-weight: 600;
+  color: #94a3b8;
+}
+
+.error {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fee2e2;
+  color: #b91c1c;
+  font-size: 14px;
+}
+
+.tocable {
+  cursor: pointer;
+}
+
+.monto {
+  margin-top: 6px !important;
+  font-size: 30px;
+  font-weight: 700;
+  color: #0f766e;
+}

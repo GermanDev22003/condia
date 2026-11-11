@@ -1,0 +1,50 @@
+<ion-content [fullscreen]="true" class="login">
+  <main class="caja">
+    <h1 class="logo">Con<span>DIA</span></h1>
+    <p class="lema">Tu condominio en tu bolsillo</p>
+
+    <ion-input
+      class="campo"
+      label="Correo"
+      labelPlacement="stacked"
+      type="email"
+      autocomplete="email"
+      placeholder="maria@condia.test"
+      [value]="correo()"
+      (ionInput)="correo.set($any($event).detail.value ?? '')"
+      (keyup.enter)="ingresar()"
+    ></ion-input>
+
+    <ion-input
+      class="campo"
+      label="Contraseña"
+      labelPlacement="stacked"
+      type="password"
+      autocomplete="current-password"
+      placeholder="••••••••"
+      [value]="password()"
+      (ionInput)="password.set($any($event).detail.value ?? '')"
+      (keyup.enter)="ingresar()"
+    >
+      <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+    </ion-input>
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    <ion-button expand="block" [disabled]="enviando()" (click)="ingresar()">
+      {{ enviando() ? 'Ingresando…' : 'Ingresar' }}
+    </ion-button>
+
+    <button class="olvide" type="button" (click)="ayudaAbierta.set(!ayudaAbierta())">
+      ¿Olvidaste tu contraseña?
+    </button>
+    @if (ayudaAbierta()) {
+      <p class="ayuda">
+        Comunícate con la administración de tu condominio. Ellos pueden restablecer tu contraseña, y luego podrás
+        cambiarla desde la app en <strong>Cambiar contraseña</strong>.
+      </p>
+    }
+  </main>
+</ion-content>

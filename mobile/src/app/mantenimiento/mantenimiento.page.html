@@ -1,0 +1,71 @@
+<ion-content [fullscreen]="true">
+  <header class="cabecera">
+    <button class="volver" type="button" (click)="volver()">‹ Inicio</button>
+    <h1>Mantenimiento</h1>
+  </header>
+
+  <section class="contenido">
+    @if (formAbierto()) {
+      <form (submit)="$event.preventDefault(); enviar()">
+        <label>
+          Título
+          <input type="text" maxlength="150" [value]="titulo()" (input)="titulo.set($any($event.target).value)" />
+        </label>
+        <label>
+          Ubicación
+          <input type="text" maxlength="150" placeholder="Ej. Baño principal" [value]="ubicacion()" (input)="ubicacion.set($any($event.target).value)" />
+        </label>
+        <label>
+          Prioridad
+          <select (change)="prioridad.set($any($event.target).value)">
+            @for (p of prioridades; track p.valor) {
+              <option [value]="p.valor" [selected]="p.valor === prioridad()">{{ p.texto }}</option>
+            }
+          </select>
+        </label>
+        <label>
+          Descripción
+          <textarea rows="5" maxlength="2000" [value]="descripcion()" (input)="descripcion.set($any($event.target).value)"></textarea>
+        </label>
+        @if (errorForm()) {
+          <p class="error">{{ errorForm() }}</p>
+        }
+        <div class="botones">
+          <button type="button" (click)="formAbierto.set(false)">Cancelar</button>
+          <button type="submit" class="principal" [disabled]="enviando()">
+            {{ enviando() ? 'Enviando…' : 'Enviar solicitud' }}
+          </button>
+        </div>
+      </form>
+    } @else {
+      <button class="nuevo" type="button" (click)="abrirForm()">+ Nueva solicitud</button>
+
+      @if (aviso()) {
+        <p class="exito">{{ aviso() }}</p>
+      }
+      @if (error()) {
+        <p class="error">{{ error() }}</p>
+      }
+
+      @if (cargando()) {
+        <p class="vacio">Cargando…</p>
+      } @else if (solicitudes().length === 0) {
+        <p class="vacio">Aún no has enviado ninguna solicitud.</p>
+      }
+
+      @for (s of solicitudes(); track s.id_solicitud) {
+        <article class="tarjeta">
+          <div class="fila">
+            <strong>{{ s.titulo }}</strong>
+            <span class="estado" [class]="s.estado">{{ textoEstado[s.estado] }}</span>
+          </div>
+          <p>{{ s.descripcion }}</p>
+          @if (s.personal) {
+            <p class="respuesta"><strong>Asignado a:</strong> {{ s.personal.nombres }} {{ s.personal.apellidos }}</p>
+          }
+          <small>{{ s.ubicacion }} · Prioridad {{ texto(s.prioridad) }} · {{ s.fecha_registro }}</small>
+        </article>
+      }
+    }
+  </section>
+</ion-content>
