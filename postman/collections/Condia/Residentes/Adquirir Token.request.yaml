@@ -1,0 +1,12 @@
+$kind: http-request
+description: ""
+url: http://127.0.0.1:8000/api/login
+method: POST
+body:
+  type: json
+  content: '{ "correo": "admin@condia.test", "password": "Admin12345" }'
+auth:
+  type: bearer
+  credentials:
+    token: 6mxzyvtNJVCdxcjlBTp5AbddzZoBqFy2Jo9kAXLqdsizOjKI9MUynAzUDAQCR08d
+order: 4000
