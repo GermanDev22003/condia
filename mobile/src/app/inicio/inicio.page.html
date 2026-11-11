@@ -1,0 +1,53 @@
+<ion-content [fullscreen]="true" class="inicio">
+  <header class="cabecera">
+    <div class="fila">
+      <span class="lugar">{{ lugar() }}</span>
+      <button class="salir" type="button" (click)="salir()">Salir</button>
+    </div>
+    <h1>Hola, {{ nombre() }} 👋</h1>
+  </header>
+
+  <section class="contenido">
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    <article class="tarjeta tocable" (click)="verCuotas()">
+      <p class="etiqueta">TOTAL PENDIENTE</p>
+      @if (pendiente() !== null) {
+        <p class="monto">${{ pendiente() }}</p>
+        <span>Toca para ver mis cuotas</span>
+      } @else {
+        <p class="aviso">Cargando…</p>
+      }
+    </article>
+
+    <article class="tarjeta fila tocable" (click)="ir('/quejas')">
+      <div>
+        <strong>Mis quejas</strong>
+        <span>Envía una queja y revisa la respuesta</span>
+      </div>
+    </article>
+
+    <article class="tarjeta fila tocable" (click)="ir('/mantenimiento')">
+      <div>
+        <strong>Mantenimiento</strong>
+        <span>Solicita reparaciones y sigue su estado</span>
+      </div>
+    </article>
+
+    <article class="tarjeta fila tocable" (click)="verCuotas()">
+      <div>
+        <strong>Mis cuotas y pagos</strong>
+        <span>Cuotas, saldo y historial de pagos</span>
+      </div>
+    </article>
+
+    <article class="tarjeta fila tocable" (click)="ir('/cambiar-password')">
+      <div>
+        <strong>Cambiar contraseña</strong>
+        <span>Actualiza tu contraseña de acceso</span>
+      </div>
+    </article>
+  </section>
+</ion-content>
